@@ -14,3 +14,16 @@ def getAllData():
           'type':data.type
         })
     return result
+
+def getSpecific(board):
+    result = []
+    for data in Automatic.getSpecificBoardData(board):
+        result.append({
+          'id':data.id,
+          'device':data.device,
+          'board':data.board,
+          'gpio':data.gpio,
+          'state':data.state,
+          'type':data.type
+        })
+    return result

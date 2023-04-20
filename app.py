@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Api,Resource,request
 from flask_cors import CORS
-from usecase.Automatic import getAllData
+from usecase.Automatic import getAllData,getSpecific
 from flasgger import Swagger
 from flasgger.utils import swag_from
 
@@ -160,6 +160,16 @@ class GET_AUTOMATIC_DATA(Resource):
         except:
             return {"error get iot data"},500
         
+class GET_SPECIFIC_BOARD(Resource):
+    def get(self,board):
+        try:
+            print("run spec")
+            data = getSpecific(board)
+            print(data)
+            return data,200
+        except:
+            return {"error get iot board data"},500
+        
 base_url = '/v1/miniilumina'
 base_iot_url = '/v1/iot'
 task_url = 'task'
@@ -170,6 +180,7 @@ health_url = 'health_check'
 #api.add_resource(RunTask,f'{base_url}/{task_url}/run/<string:groupid>')
 api.add_resource(GET_AUTOMATIC_DATA,f'{base_iot_url}/')
 api.add_resource(HEALTH_CHECK,f'{base_iot_url}/{health_url}/')
+api.add_resource(GET_SPECIFIC_BOARD,f'{base_iot_url}/<int:board>')
 
 if __name__ == '__main__':
     app.run(port=5000,host="0.0.0.0")
