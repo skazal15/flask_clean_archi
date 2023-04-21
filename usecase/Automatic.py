@@ -3,27 +3,9 @@ from util.logger import logger
 
 def getAllData():
     print('get')
-    result = []
-    for data in Automatic.getAllData():
-        result.append({
-          'id':data.id,
-          'device':data.device,
-          'board':data.board,
-          'gpio':data.gpio,
-          'state':data.state,
-          'type':data.type
-        })
+    result = Automatic.getAllData()
     return result
 
 def getSpecific(board):
-    result = []
-    for data in Automatic.getSpecificBoardData(board):
-        result.append({
-          'id':data.id,
-          'device':data.device,
-          'board':data.board,
-          'gpio':data.gpio,
-          'state':data.state,
-          'type':data.type
-        })
+    result = Automatic.getSpecificBoardData(board)
     return result

@@ -8,3 +8,5 @@ pandas
 mysqlclient
 flask_cors
 sqlalchemy-serializer
+flask-marshmallow
+marshmallow-sqlalchemy

@@ -1,17 +1,17 @@
 from config.db import db_session
-from models.automatic import TabelKontrol
+from models.automatic import TabelKontrol,TableKontrolSchema
 from sqlalchemy.exc import SQLAlchemyError
 from util.logger import logger
 
 class Automatic:
     def getAllData():
-        print('get all')
         try:
             session = db_session
             automatic = TabelKontrol.query.all()
-            logger.info(automatic)
-            print(automatic)
-            return automatic
+            automatic_schema = TableKontrolSchema(many=True)
+            result = automatic_schema.dump(automatic)
+            logger.info(result)
+            return result
         except SQLAlchemyError as e:
             session.rollback()
             logger.info(e)
@@ -22,7 +22,10 @@ class Automatic:
         try:
             session = db_session
             automatic = TabelKontrol.query.filter_by(board = board)
-            return automatic
+            automatic_schema = TableKontrolSchema(many=True)
+            result = automatic_schema.dump(automatic)
+            logger.info(result)
+            return result
         except SQLAlchemyError as e:
             session.rollback()
             logger.info(e)

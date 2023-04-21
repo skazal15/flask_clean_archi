@@ -1,5 +1,9 @@
 from sqlalchemy import Column,Integer,String,Enum,TIMESTAMP
 from config.db import Base
+from flask_marshmallow import Marshmallow
+from flask_marshmallow.sqla import SQLAlchemyAutoSchema
+
+ma =Marshmallow()
 
 class TabelKontrol(Base):
     __tablename__ = 'tabel_kontrol'
@@ -18,3 +22,7 @@ class TabelKontrol(Base):
         self.state = state
         self.tipe = type
         self.logtime = logtime
+
+class TableKontrolSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = TabelKontrol
