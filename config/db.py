@@ -5,7 +5,7 @@ from sqlalchemy.ext.declarative import declarative_base
 user=""
 password = ""
 host = ""
-dbname = "kontrol"
+dbname = "kontrol1"
 env = "local"
 
 if env == "local":

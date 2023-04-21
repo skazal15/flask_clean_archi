@@ -6,8 +6,8 @@ from util.logger import logger
 class Automatic:
     def getAllData():
         print('get all')
-        session = db_session
         try:
+            session = db_session
             automatic = TabelKontrol.query.all()
             logger.info(automatic)
             print(automatic)
@@ -19,8 +19,8 @@ class Automatic:
             session.remove()
     
     def getSpecificBoardData(board):
-        session = db_session
         try:
+            session = db_session
             automatic = TabelKontrol.query.filter_by(board = board)
             return automatic
         except SQLAlchemyError as e:
@@ -30,8 +30,8 @@ class Automatic:
             session.remove()
 
     def setState(board,gpio,state):
-        session = db_session
         try:
+            session = db_session
             automatic = TabelKontrol.query.filter_by(board = board,gpio = gpio)
             automatic.state = state
             session.commit()
