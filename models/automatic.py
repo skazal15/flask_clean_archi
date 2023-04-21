@@ -14,14 +14,15 @@ class TabelKontrol(Base):
     state = Column(Integer, nullable=False)
     type = Column(Enum('Active High', 'Active Low'), nullable=False)
     logtime = Column(TIMESTAMP, nullable=False, server_default='CURRENT_TIMESTAMP', onupdate='CURRENT_TIMESTAMP')
+    email = Column(String(100),nullable=True)
 
-    def __init__(self,device,board,gpio,state,type,logtime):
+    def __init__(self,device,board,gpio,state,type,email):
         self.device = device
         self.board = board
         self.gpio = gpio
         self.state = state
-        self.tipe = type
-        self.logtime = logtime
+        self.type = type
+        self.email = email
 
 class TableKontrolSchema(SQLAlchemyAutoSchema):
     class Meta:

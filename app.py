@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Api,Resource,request
 from flask_cors import CORS
-from usecase.Automatic import getAllData,getSpecific
+from usecase.Automatic import getAllData,getSpecific,updateState,postNewBoard
 from flasgger import Swagger
 from flasgger.utils import swag_from
 
@@ -160,7 +160,7 @@ class GET_AUTOMATIC_DATA(Resource):
         except:
             return {"error get iot data"},500
         
-class GET_SPECIFIC_BOARD(Resource):
+class BOARD(Resource):
     def get(self,board):
         try:
             print("run spec")
@@ -169,6 +169,32 @@ class GET_SPECIFIC_BOARD(Resource):
             return data,200
         except:
             return {"error get iot board data"},500
+        
+    def put(self,board):
+        try:
+            request_data = request.json
+            gpio = request_data['gpio']
+            state = request_data['state']
+            updateState(board,gpio,state)
+            return {},200
+        except :
+            return {"error update state"},500
+        
+class NEW_BOARD(Resource):
+    def post(self):
+        try:
+            request_data = request.json
+            device = request_data['device']
+            board = request_data['board']
+            gpio =  request_data['gpio']
+            state = request_data['state']
+            tipe = request_data['tipe']
+            email = request_data['email']
+            postNewBoard(device,board,gpio,state,tipe,email)
+            return {},200
+        except :
+            return {"error add data"},500
+
         
 base_url = '/v1/miniilumina'
 base_iot_url = '/v1/iot'
@@ -180,7 +206,9 @@ health_url = 'health_check'
 #api.add_resource(RunTask,f'{base_url}/{task_url}/run/<string:groupid>')
 api.add_resource(GET_AUTOMATIC_DATA,f'{base_iot_url}/')
 api.add_resource(HEALTH_CHECK,f'{base_iot_url}/{health_url}/')
-api.add_resource(GET_SPECIFIC_BOARD,f'{base_iot_url}/<int:board>')
+api.add_resource(BOARD,f'{base_iot_url}/<int:board>')
+api.add_resource(NEW_BOARD,f'{base_iot_url}/')
+
 
 if __name__ == '__main__':
     app.run(port=5000,host="0.0.0.0")
